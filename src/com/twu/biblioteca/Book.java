@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import java.util.Date;
+
 /**
  * Created by yanzhang on 8/2/16.
  */
@@ -7,6 +9,8 @@ public class Book implements IBook {
 
     private long Id;
     private String Name;
+    private String Author;
+    private Date PublishYear;
 
     public long getId(){
         return Id;
@@ -22,6 +26,22 @@ public class Book implements IBook {
 
     public void setName(String name){
         Name = name;
+    }
+
+    public String getAuthor(){
+        return Author;
+    }
+
+    public void setAuthor(String author){
+        Author = author;
+    }
+
+    public Date getPublishYear(){
+        return PublishYear;
+    }
+
+    public void setPublishYear(Date year){
+        PublishYear = year;
     }
 
     public Book(){

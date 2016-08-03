@@ -1,7 +1,7 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
 
 public class BibliotecaApp {
 
@@ -19,9 +19,9 @@ public class BibliotecaApp {
         System.out.println("The Following is Book List: ");
         List<IBook> currentBookList = bookSheet.getBookList();
         for(int i=0;i<currentBookList.size();++i){
-            System.out.print(((Book)currentBookList.get(i)).getId());
-            System.out.print("--");
-            System.out.print(((Book)currentBookList.get(i)).getName());
+            System.out.print(String.format("%4d",((Book)currentBookList.get(i)).getId()));
+            System.out.print(" ==> ");
+            System.out.print(String.format("%-30s",((Book)currentBookList.get(i)).getName()));
             System.out.println();
         }
     }
