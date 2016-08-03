@@ -23,6 +23,8 @@ public class BibliotecaApp {
             System.out.print(String.format("%4d",((Book)currentBookList.get(i)).getId()));
             System.out.print(" ==> ");
             System.out.print(String.format("%-30s",((Book)currentBookList.get(i)).getName()));
+            System.out.print(String.format("%-20s",((Book)currentBookList.get(i)).getAuthor()));
+            System.out.print(String.format("%-10s",((Book)currentBookList.get(i)).getPublishYear().toString()));
             System.out.println();
         }
     }
