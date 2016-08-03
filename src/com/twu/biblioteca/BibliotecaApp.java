@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BibliotecaApp {
@@ -28,9 +29,9 @@ public class BibliotecaApp {
 
     private static BookSheet initBookSheet() {
         ArrayList<IBook> initBookList = new ArrayList<IBook>();
-        initBookList.add(new Book(1,"first book"));
-        initBookList.add(new Book(2,"second book"));
-        initBookList.add(new Book(3,"third book"));
+        initBookList.add(new Book(1,"first book","yan,zhang", new Date(20140902)));
+        initBookList.add(new Book(2,"second book","yan,zhang", new Date(20150902)));
+        initBookList.add(new Book(3,"third book","yan,zhang", new Date(20160902)));
         return new BookSheet(initBookList);
     }
 }

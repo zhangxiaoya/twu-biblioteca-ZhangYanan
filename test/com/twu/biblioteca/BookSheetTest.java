@@ -3,11 +3,10 @@ package com.twu.biblioteca;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by yanzhang on 8/2/16.
@@ -29,16 +28,37 @@ public class BookSheetTest {
 
     @Test
     public void when_bookSheet_is_not_empty_should_return_book_list() throws Exception {
-        List<IBook> testList = new ArrayList<IBook>();
-        testList.add(new Book(1,"first book"));
-        testList.add(new Book(2,"second book"));
-        testList.add(new Book(3,"third book"));
 
-        bookSheet = new BookSheet(testList);
+        List<IBook> testList = mockBookList();
+        mockBookSheet(testList);
+
         List<IBook> bookList = bookSheet.getBookList();
         assertEquals(3,bookList.size());
 
         Book[] array = (Book[]) bookList.toArray(new Book[bookList.size()]);
         assertArrayEquals(testList.toArray(),array);
+    }
+
+    @Test
+    public void when_pint_book_list_should_get_the_details() throws Exception{
+        List<IBook> testList = mockBookList();
+        mockBookSheet(testList);
+
+        List<IBook> bookList = bookSheet.getBookList();
+        assertNotNull(((Book)bookList.get(0)).getAuthor());
+        assertNotNull(((Book)bookList.get(0)).getPublishYear());
+        assertNotNull(((Book)bookList.get(0)).getName());
+    }
+
+    private void mockBookSheet(List<IBook> testList) {
+        bookSheet = new BookSheet(testList);
+    }
+
+    private List<IBook> mockBookList() {
+        List<IBook> testList = new ArrayList<IBook>();
+        testList.add(new Book(1,"first book","yan,zhang", new Date(20140902)));
+        testList.add(new Book(2,"second book","yan,zhang", new Date(20150902)));
+        testList.add(new Book(3,"third book","yan,zhang", new Date(20160902)));
+        return testList;
     }
 }

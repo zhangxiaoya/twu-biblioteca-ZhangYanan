@@ -49,9 +49,11 @@ public class Book implements IBook {
         Name = new String();
     }
 
-    public Book(long id, String name){
+    public Book(long id, String name,String author,Date year){
         Id = id;
         Name = name;
+        Author = author;
+        PublishYear = year;
     }
 
     public Book(String name){
