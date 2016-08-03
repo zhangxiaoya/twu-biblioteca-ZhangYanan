@@ -3,6 +3,7 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by yanzhang on 8/3/16.
@@ -12,19 +13,57 @@ public class LibrarySystem {
     private IWelcome welcomeGen;
     private BookSheet bookSheet;
 
+    private ArrayList<String> commandList;
+
     public void initSystem(){
         welcomeGen = new Welcome();
         bookSheet = initBookSheet();
+        setCommandList();
     }
 
     public void run(){
 
         welcomeGen.printWelcomeMsg();
 
-        printBookList(bookSheet);
+        printCommandList();
+
+        System.out.println("Please input your choice(use the number):");
+        Scanner scanner = new Scanner(System.in);
+        String userInputMenu = scanner.next();
+
+        while (!userInputMenu.isEmpty()){
+            if(userInputMenu.equals("1")){
+                printBookList(bookSheet);
+                System.out.println("Please input your choice(use the number):");
+            }
+            else if(userInputMenu.equals("0")){
+                System.out.println("Exsiting Online Library");
+            }
+            else{
+                System.out.println("Invalid Input Command!");
+                System.out.println("Please input your choice(use the number):");
+            }
+            userInputMenu = scanner.next();
+        }
     }
 
-    private  void printBookList(BookSheet bookSheet) {
+    private void setCommandList(){
+        commandList = new ArrayList<String>();
+        commandList.add("List Books");
+    }
+
+    private void printCommandList(){
+        System.out.println("System Menus: ");
+        for(int i =0;i<commandList.size();++i){
+            System.out.println(String.format("%4d  ->   %s",(i+1),commandList.get(i)));
+        }
+    }
+
+    public ArrayList<String> getCommandList(){
+        return commandList;
+    }
+
+    private void printBookList(BookSheet bookSheet) {
         System.out.println("The Following is Book List: ");
         List<IBook> currentBookList = bookSheet.getBookList();
         for(int i=0;i<currentBookList.size();++i){
