@@ -11,6 +11,15 @@ public class Book implements IBook {
     private String Name;
     private String Author;
     private Date PublishYear;
+    private boolean isCheckedOut;
+
+    public void setCheckedOut(boolean ischeckedout){
+        isCheckedOut = ischeckedout;
+    }
+
+    public boolean getCheckedOut(){
+        return isCheckedOut;
+    }
 
     public long getId(){
         return Id;
@@ -54,6 +63,7 @@ public class Book implements IBook {
         Name = name;
         Author = author;
         PublishYear = year;
+        isCheckedOut = false;
     }
 
     public Book(String name){

@@ -22,7 +22,16 @@ public class BookSheet implements IBookSheet {
     }
 
     public List<IBook> getBookList(){
-        return bookList;
+
+        List<IBook> bookListWithoutChecked = new ArrayList<IBook>();
+        Book tmpIndex = new Book();
+        for(int i =0;i<bookList.size();++i){
+            tmpIndex = (Book) bookList.get(i);
+            if(!tmpIndex.getCheckedOut()){
+                bookListWithoutChecked.add(tmpIndex);
+            }
+        }
+        return bookListWithoutChecked;
     }
 
 }

@@ -50,6 +50,15 @@ public class BookSheetTest {
         assertNotNull(((Book)bookList.get(0)).getName());
     }
 
+    @Test
+    public void when_book_4_was_checkedout_should_not_show_in_book_sheet() throws Exception{
+        List<IBook> testList = mockBookListWithOneCheckedOut();
+        mockBookSheet(testList);
+
+        List<IBook> bookList = bookSheet.getBookList();
+        assertEquals(2,bookList.size());
+    }
+
     private void mockBookSheet(List<IBook> testList) {
         bookSheet = new BookSheet(testList);
     }
@@ -59,6 +68,16 @@ public class BookSheetTest {
         testList.add(new Book(1,"first book","yan,zhang", new Date(20140902)));
         testList.add(new Book(2,"second book","yan,zhang", new Date(20150902)));
         testList.add(new Book(3,"third book","yan,zhang", new Date(20160902)));
+        return testList;
+    }
+
+    private List<IBook> mockBookListWithOneCheckedOut() {
+        List<IBook> testList = new ArrayList<IBook>();
+        testList.add(new Book(1,"first book","yan,zhang", new Date(20140902)));
+        testList.add(new Book(2,"second book","yan,zhang", new Date(20150902)));
+        Book checkedBook  = new Book(3,"third book","yan,zhang", new Date(20160902));
+        checkedBook.setCheckedOut(true);
+        testList.add(checkedBook);
         return testList;
     }
 }
