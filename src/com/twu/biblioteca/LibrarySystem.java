@@ -70,7 +70,7 @@ public class LibrarySystem {
 
     private void printPromotMsg(String Msg) {
         lastPromotMsg = Msg;
-        System.out.println(Msg);
+        System.out.print(Msg);
     }
 
     private void printErrorMsg(String Msg){
@@ -80,13 +80,14 @@ public class LibrarySystem {
 
     private void setupCommandList(){
         commandList = new ArrayList<String>();
+        commandList.add("Quit");
         commandList.add("List Books");
     }
 
     private void printCommandList(){
-        printPromotMsg("System Menus: ");
+        System.out.println("System Menus: ");
         for(int i =0;i<commandList.size();++i){
-            printPromotMsg(String.format("%4d  ->   %s",(i+1),commandList.get(i)));
+            System.out.println(String.format("%4d  ->   %s",i ,commandList.get(i)));
         }
     }
 
@@ -95,7 +96,7 @@ public class LibrarySystem {
     }
 
     private void printBookList(BookSheet bookSheet) {
-        printPromotMsg("The Following is Book List: ");
+        System.out.println("The Following is Book List: ");
         List<IBook> currentBookList = bookSheet.getBookList();
         for(int i=0;i<currentBookList.size();++i){
             System.out.print(String.format("%4d",((Book)currentBookList.get(i)).getId()));

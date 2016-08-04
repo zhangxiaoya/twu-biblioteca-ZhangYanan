@@ -39,4 +39,13 @@ public class LibrarySystemTest {
         assertEquals("Select a valid option!",system.getLastErrorMsg());
     }
 
+    @Test
+    public void should_get_command_list_contain_Quit() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        system.initSystem();
+
+        ArrayList<String> commandList = system.getCommandList();
+        assertTrue(commandList.contains("Quit"));
+    }
+
 }
