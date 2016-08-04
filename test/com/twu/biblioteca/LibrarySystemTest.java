@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
  * Created by yanzhang on 8/3/16.
  */
 public class LibrarySystemTest {
+    
     @Test
     public void should_get_command_list_contain_ListBooks() throws Exception {
         LibrarySystem system = new LibrarySystem();
@@ -22,6 +23,14 @@ public class LibrarySystemTest {
         assertTrue(commandList.contains("List Books"));
     }
 
+    @Test
+    public void should_get_command_list_contain_CheckoutBook() throws Exception {
+        LibrarySystem system = new LibrarySystem();
+        system.initSystem();
+
+        ArrayList<String> commandList = system.getCommandList();
+        assertTrue(commandList.contains("Check Book"));
+    }
 
     @Test
     public void should_get_invalid_message_when_input_not_a_option() throws Exception{

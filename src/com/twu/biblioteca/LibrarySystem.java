@@ -82,6 +82,7 @@ public class LibrarySystem {
         commandList = new ArrayList<String>();
         commandList.add("Quit");
         commandList.add("List Books");
+        commandList.add("Check Book");
     }
 
     private void printCommandList(){
