@@ -10,15 +10,21 @@ import java.util.Scanner;
  */
 public class LibrarySystem {
 
-    private IWelcome welcomeGen;
+    private IWelcome  welcomeGen;
     private BookSheet bookSheet;
 
     private ArrayList<String> commandList;
 
+    private String lastErrorMsg;
+    private String lastPromotMsg;
+    private String userCommand;
+
     public void initSystem(){
         welcomeGen = new Welcome();
         bookSheet = initBookSheet();
-        setCommandList();
+        lastErrorMsg = new String();
+        lastPromotMsg = new String();
+        setupCommandList();
     }
 
     public void run(){
@@ -27,35 +33,60 @@ public class LibrarySystem {
 
         printCommandList();
 
-        System.out.println("Please input your choice(use the number):");
+        printPromotMsg("> ");
         Scanner scanner = new Scanner(System.in);
-        String userInputMenu = scanner.next();
+        userCommand = scanner.nextLine();
 
-        while (!userInputMenu.isEmpty()){
-            if(userInputMenu.equals("1")){
-                printBookList(bookSheet);
-                System.out.println("Please input your choice(use the number):");
-            }
-            else if(userInputMenu.equals("0")){
-                System.out.println("Exsiting Online Library");
-            }
-            else{
-                System.out.println("Invalid Input Command!");
-                System.out.println("Please input your choice(use the number):");
-            }
-            userInputMenu = scanner.next();
+        while (!userCommand.isEmpty()){
+
+            if (translateCommand(userCommand)) break;
+
+            userCommand = scanner.nextLine();
         }
     }
 
-    private void setCommandList(){
+    private boolean translateCommand(String userInputMenu) {
+        if(userInputMenu.equals("1")){
+            printBookList(bookSheet);
+            printPromotMsg("> ");
+        }
+        else if(userInputMenu.equals("0")){
+            printPromotMsg("Exsiting Online Library...");
+            return true;
+        }
+        else{
+            printErrorMsg("Select a valid option!");
+        }
+        return false;
+    }
+
+    public String getLastErrorMsg(){
+        return lastErrorMsg;
+    }
+
+    public String getLastPromotMsg(){
+        return lastPromotMsg;
+    }
+
+    private void printPromotMsg(String Msg) {
+        lastPromotMsg = Msg;
+        System.out.println(Msg);
+    }
+
+    private void printErrorMsg(String Msg){
+        lastErrorMsg = Msg;
+        System.out.println(Msg);
+    }
+
+    private void setupCommandList(){
         commandList = new ArrayList<String>();
         commandList.add("List Books");
     }
 
     private void printCommandList(){
-        System.out.println("System Menus: ");
+        printPromotMsg("System Menus: ");
         for(int i =0;i<commandList.size();++i){
-            System.out.println(String.format("%4d  ->   %s",(i+1),commandList.get(i)));
+            printPromotMsg(String.format("%4d  ->   %s",(i+1),commandList.get(i)));
         }
     }
 
@@ -64,7 +95,7 @@ public class LibrarySystem {
     }
 
     private void printBookList(BookSheet bookSheet) {
-        System.out.println("The Following is Book List: ");
+        printPromotMsg("The Following is Book List: ");
         List<IBook> currentBookList = bookSheet.getBookList();
         for(int i=0;i<currentBookList.size();++i){
             System.out.print(String.format("%4d",((Book)currentBookList.get(i)).getId()));

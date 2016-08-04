@@ -2,9 +2,11 @@ package com.twu.biblioteca;
 
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -18,6 +20,23 @@ public class LibrarySystemTest {
 
         ArrayList<String> commandList = system.getCommandList();
         assertTrue(commandList.contains("List Books"));
+    }
+
+
+    @Test
+    public void should_get_invalid_message_when_input_not_a_option() throws Exception{
+
+        String mockInput = "sss\n0";
+        ByteArrayInputStream mockIn = new ByteArrayInputStream(mockInput.getBytes());
+        LibrarySystem system = new LibrarySystem();
+
+        System.setIn(mockIn);
+
+        system.initSystem();
+        system.run();
+
+        System.setIn(System.in);
+        assertEquals("Select a valid option!",system.getLastErrorMsg());
     }
 
 }
