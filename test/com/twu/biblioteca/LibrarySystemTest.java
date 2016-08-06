@@ -168,6 +168,32 @@ public class LibrarySystemTest {
         System.setIn(System.in);
     }
 
+    @Test
+    public void should_get_command_list_contain_List_Movies() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        system.initSystem();
+
+        ArrayList<String> commandList = system.getCommandList();
+        assertTrue(commandList.contains("List Movies"));
+    }
+
+    @Test
+    public void should_print_moviesList_when_input_List_Movies() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+
+        String mockInput  = "List Movies\n"
+                          + "Quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        assertTrue(isPrintMovieList());
+        System.setIn(System.in);
+    }
+
+
     @After
     public void resetStreams(){
         System.setOut(System.out);
@@ -185,4 +211,17 @@ public class LibrarySystemTest {
 
         return true;
     }
+
+    private boolean isPrintMovieList(){
+
+        String[] outPutList =  outContend.toString().split("\n");
+
+        if(!outPutList[outPutList.length-5].contains("The Following is Moive List: ")) return false;
+        if(!outPutList[outPutList.length-4].contains("1 ==> Thu Jan 01 13:35:40 CST 1970  Zhang San      1")) return false;
+        if(!outPutList[outPutList.length-3].contains("2 ==> Thu Jan 01 13:35:50 CST 1970  Lee Si         2")) return false;
+        if(!outPutList[outPutList.length-2].contains("3 ==> Thu Jan 01 13:36:00 CST 1970  Wang Wu        3")) return false;
+
+        return true;
+    }
+
 }

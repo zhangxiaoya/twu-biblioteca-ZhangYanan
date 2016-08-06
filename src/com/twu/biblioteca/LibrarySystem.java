@@ -12,6 +12,7 @@ public class LibrarySystem {
 
     private IWelcome  welcomeGen;
     private BookSheet bookSheet;
+    private MovieSheet movieSheet;
 
     private ArrayList<String> commandList;
 
@@ -20,6 +21,8 @@ public class LibrarySystem {
     public void initSystem(){
         welcomeGen = new Welcome();
         bookSheet = initBookSheet();
+        movieSheet = initMovieSheet();
+
         setupCommandList();
     }
 
@@ -44,7 +47,10 @@ public class LibrarySystem {
 
         String[] inputCommandList = userInputMenu.split(" ");
         if(inputCommandList[0].toLowerCase().equals("list") && inputCommandList[1].toLowerCase().equals("books")){
-            printBookList(bookSheet);
+            printBookList();
+        }
+        else if(inputCommandList[0].toLowerCase().equals("list") && inputCommandList[1].toLowerCase().equals("movies")){
+            PrintMovieList();
         }
         else if(inputCommandList[0].toLowerCase().equals("check") && inputCommandList[1].toLowerCase().equals("book")){
             if(inputCommandList.length == 2 || strToLong(inputCommandList[2])==0){
@@ -83,12 +89,17 @@ public class LibrarySystem {
         return res;
     }
 
+    public ArrayList<String> getCommandList(){
+        return commandList;
+    }
+
     private void setupCommandList(){
         commandList = new ArrayList<String>();
         commandList.add("Quit");
         commandList.add("List Books");
         commandList.add("Check Book");
         commandList.add("Return Book");
+        commandList.add("List Movies");
     }
 
     private void printCommandList(){
@@ -98,11 +109,7 @@ public class LibrarySystem {
         }
     }
 
-    public ArrayList<String> getCommandList(){
-        return commandList;
-    }
-
-    private void printBookList(BookSheet bookSheet) {
+    private void printBookList() {
         System.out.println("The Following is Book List: ");
         List<IBook> currentBookList = bookSheet.getBookList();
         for(int i=0;i<currentBookList.size();++i){
@@ -115,11 +122,34 @@ public class LibrarySystem {
         }
     }
 
+    private void PrintMovieList(){
+
+        System.out.println("The Following is Moive List: ");
+        List<IMovie> currentMovieList = movieSheet.getMovieList();
+        for(int i=0;i<currentMovieList.size();++i){
+            System.out.print(String.format("%4d",((Movie)currentMovieList.get(i)).getId()));
+            System.out.print(" ==> ");
+            System.out.print(String.format("%-30s",((Movie)currentMovieList.get(i)).getPublishYear().toString()));
+            System.out.print(String.format("%-15s",((Movie)currentMovieList.get(i)).getDirector()));
+            System.out.print(String.format("%-3d",((Movie)currentMovieList.get(i)).getRate()));
+            System.out.println("");
+        }
+    };
+
     private BookSheet initBookSheet() {
         ArrayList<IBook> initBookList = new ArrayList<IBook>();
         initBookList.add(new Book(1,"first book","yan,zhang", new Date(20140902)));
         initBookList.add(new Book(2,"second book","yan,zhang", new Date(20150902)));
         initBookList.add(new Book(3,"third book","yan,zhang", new Date(20160902)));
         return new BookSheet(initBookList);
+    }
+
+    private MovieSheet initMovieSheet(){
+        ArrayList<IMovie> initMovieList = new ArrayList<IMovie>();
+        initMovieList.add(new Movie(1, new Date(20140902),"Zhang San",((short) 1)));
+        initMovieList.add(new Movie(2, new Date(20150902),"Lee Si",((short) 2)));
+        initMovieList.add(new Movie(3, new Date(20160902),"Wang Wu",((short) 3)));
+
+        return new MovieSheet(initMovieList);
     }
 }
