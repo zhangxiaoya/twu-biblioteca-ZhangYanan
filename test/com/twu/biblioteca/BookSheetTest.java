@@ -51,9 +51,8 @@ public class BookSheetTest {
         assertNotNull(((Book)bookList.get(0)).getName());
     }
 
-
     @Test
-    public void when_book_4_was_checkedout_should_not_show_in_book_sheet() throws Exception{
+    public void when_book_3_was_checkedout_should_not_show_in_book_sheet() throws Exception{
         List<IBook> testList = mockBookListWithOneCheckedOut();
         mockBookSheet(testList);
 
@@ -72,6 +71,22 @@ public class BookSheetTest {
         bookSheet.checkedOutOneBook(3);
         bookList = bookSheet.getBookList();
         assertEquals(2,bookList.size());
+    }
+
+    @Test
+    public void should_check_book_success_when_book_is_available() throws Exception{
+        List<IBook> testList = mockBookList();
+        mockBookSheet(testList);
+
+        assertTrue(bookSheet.checkedOutOneBook(1));
+    }
+
+    @Test
+    public void should_check_book_failed_when_book_is_not_available() throws Exception{
+        List<IBook> testList = mockBookList();
+        mockBookSheet(testList);
+
+        assertTrue(!bookSheet.checkedOutOneBook(4));
     }
 
     private void mockBookSheet(List<IBook> testList) {

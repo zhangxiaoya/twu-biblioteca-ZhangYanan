@@ -14,4 +14,8 @@ public class CheckBook {
             System.out.println("That book is not available.");
         }
     }
+
+    public static void checkReturn(BookSheet bookSheet, long bookId){
+
+    }
 }

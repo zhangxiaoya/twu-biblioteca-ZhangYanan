@@ -28,7 +28,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_command_list_contain_ListBooks() throws Exception {
+    public void should_get_command_list_contain_List_Books() throws Exception {
         LibrarySystem system = new LibrarySystem();
         system.initSystem();
 
@@ -37,7 +37,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_command_list_contain_CheckoutBook() throws Exception {
+    public void should_get_command_list_contain_Check_Book() throws Exception {
         LibrarySystem system = new LibrarySystem();
         system.initSystem();
 
@@ -74,7 +74,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_print_bookList_when_input_1() throws Exception{
+    public void should_print_bookList_when_input_List_Books() throws Exception{
         LibrarySystem system = new LibrarySystem();
 
         String mockInput  = "List Books\n"
