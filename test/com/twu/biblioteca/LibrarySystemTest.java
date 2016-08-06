@@ -101,7 +101,24 @@ public class LibrarySystemTest {
         system.run();
 
         String[] outputList = outContend.toString().split("\n");
-        assertEquals("Thank you! Enjoy the book",outputList[outputList.length - 2]);
+        assertEquals("Thank you! Enjoy the book.",outputList[outputList.length - 2]);
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void should_print_unsuccessfully_info_when_checkout_failed() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        String mockInput = "Check Book 4\n"
+                + "quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertEquals("That book is not available.",outputList[outputList.length - 2]);
 
         System.setIn(System.in);
     }

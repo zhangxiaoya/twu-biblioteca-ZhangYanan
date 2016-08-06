@@ -10,6 +10,8 @@ public class CheckBook {
         if(bookSheet.checkedOutOneBook(bookId)){
             System.out.println("Thank you! Enjoy the book");
         }
-
+        else{
+            System.out.println("That book is not available.");
+        }
     }
 }
