@@ -89,6 +89,23 @@ public class BookSheetTest {
         assertTrue(!bookSheet.checkedOutOneBook(4));
     }
 
+    @Test
+    public void should_check_return_book_success_when_book_is_valid() throws Exception{
+        List<IBook> testList = mockBookListWithOneCheckedOut();
+        mockBookSheet(testList);
+
+        assertTrue(bookSheet.checkedReturnOneBook(3));
+    }
+
+    @Test
+    public void should_check_return_book_faild_when_book_is_Invalid() throws Exception{
+        List<IBook> testList = mockBookListWithOneCheckedOut();
+        mockBookSheet(testList);
+
+        assertTrue(!bookSheet.checkedReturnOneBook(4));
+    }
+
+
     private void mockBookSheet(List<IBook> testList) {
         bookSheet = new BookSheet(testList);
     }

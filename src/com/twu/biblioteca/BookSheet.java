@@ -43,4 +43,15 @@ public class BookSheet implements IBookSheet {
         }
         return false;
     }
+
+    public boolean checkedReturnOneBook(long bookId) {
+        for(int i=0;i<bookList.size();++i){
+            if(((Book)bookList.get(i)).getId() == bookId){
+                ((Book) bookList.get(i)).setCheckedOut(false);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
