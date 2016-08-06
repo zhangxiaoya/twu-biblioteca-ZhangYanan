@@ -15,15 +15,11 @@ public class LibrarySystem {
 
     private ArrayList<String> commandList;
 
-    private String lastErrorMsg;
-    private String lastPromotMsg;
     private String userCommand;
 
     public void initSystem(){
         welcomeGen = new Welcome();
         bookSheet = initBookSheet();
-        lastErrorMsg = new String();
-        lastPromotMsg = new String();
         setupCommandList();
     }
 
@@ -33,7 +29,6 @@ public class LibrarySystem {
 
         printCommandList();
 
-        printPromotMsg("> ");
         Scanner scanner = new Scanner(System.in);
         userCommand = scanner.nextLine();
 
@@ -46,36 +41,37 @@ public class LibrarySystem {
     }
 
     private boolean translateCommand(String userInputMenu) {
-        if(userInputMenu.equals("1")){
+
+        String[] inputCommandList = userInputMenu.split(" ");
+        if(inputCommandList[0].toLowerCase().equals("list") && inputCommandList[1].toLowerCase().equals("books")){
             printBookList(bookSheet);
-            printPromotMsg("> ");
         }
-        else if(userInputMenu.equals("0")){
-            printPromotMsg("Exsiting Online Library...");
+        else if(inputCommandList[0].toLowerCase().equals("check") && inputCommandList[1].toLowerCase().equals("book")){
+            if(inputCommandList.length == 2 || strToLong(inputCommandList[2])==0){
+                System.out.println("Select a valid option!");
+            }
+            else{
+                long bookid = strToLong(inputCommandList[2]);
+                CheckBook.checkOut(bookSheet,bookid);
+            }
+        }
+        else if(inputCommandList[0].toLowerCase().equals("quit")){
+            System.out.print("Exsiting Online Library...");
             return true;
         }
         else{
-            printErrorMsg("Select a valid option!");
+            System.out.println("Select a valid option!");
         }
         return false;
     }
 
-    public String getLastErrorMsg(){
-        return lastErrorMsg;
-    }
-
-    public String getLastPromotMsg(){
-        return lastPromotMsg;
-    }
-
-    private void printPromotMsg(String Msg) {
-        lastPromotMsg = Msg;
-        System.out.print(Msg);
-    }
-
-    private void printErrorMsg(String Msg){
-        lastErrorMsg = Msg;
-        System.out.println(Msg);
+    private long strToLong(String strArgu){
+        long res = 0;
+        for(int i= strArgu.length()-1; i >= 0;i--){
+            res *= 10;
+            res += strArgu.toCharArray()[i] - '0';
+        }
+        return res;
     }
 
     private void setupCommandList(){
@@ -105,7 +101,7 @@ public class LibrarySystem {
             System.out.print(String.format("%-30s",((Book)currentBookList.get(i)).getName()));
             System.out.print(String.format("%-20s",((Book)currentBookList.get(i)).getAuthor()));
             System.out.print(String.format("%-10s",((Book)currentBookList.get(i)).getPublishYear().toString()));
-            System.out.println();
+            System.out.println("");
         }
     }
 

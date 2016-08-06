@@ -5,7 +5,11 @@ package com.twu.biblioteca;
  */
 public class CheckBook {
 
-    public static void checkOut(BookSheet bookSheet,int bookId){
+    public static void checkOut(BookSheet bookSheet,long bookId){
+
+        if(bookSheet.checkedOutOneBook(bookId)){
+            System.out.println("Thank you! Enjoy the book");
+        }
 
     }
 }

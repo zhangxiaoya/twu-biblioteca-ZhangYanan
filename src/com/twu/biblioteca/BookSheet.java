@@ -35,7 +35,7 @@ public class BookSheet implements IBookSheet {
     }
 
     public boolean checkedOutOneBook(long bookId){
-        for(int i=1;i<bookList.size();++i){
+        for(int i=0;i<bookList.size();++i){
             if(((Book)bookList.get(i)).getId() ==bookId){
                 ((Book)bookList.get(i)).setCheckedOut(true);
                 return true;
