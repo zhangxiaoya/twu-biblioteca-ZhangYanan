@@ -123,6 +123,51 @@ public class LibrarySystemTest {
         System.setIn(System.in);
     }
 
+    @Test
+    public void should_get_command_list_contain_Return_Book() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        system.initSystem();
+
+        ArrayList<String> commandList = system.getCommandList();
+        assertTrue(commandList.contains("Return Book"));
+    }
+
+    @Test
+    public void should_print_successfully_info_when_check_return_success() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        String mockInput = "Check Book 3\n"
+                         + "Return Book 3\n"
+                         + "quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertEquals("Thank you for returning the book.",outputList[outputList.length - 2]);
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void should_print_unsuccessfully_info_when_check_return_failed() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        String mockInput = "Check Book 3\n"
+                + "Return Book 4\n"
+                + "quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertEquals("That is not a valid book to return.",outputList[outputList.length - 2]);
+
+        System.setIn(System.in);
+    }
+
     @After
     public void resetStreams(){
         System.setOut(System.out);

@@ -55,6 +55,15 @@ public class LibrarySystem {
                 CheckBook.checkOut(bookSheet,bookid);
             }
         }
+        else if(inputCommandList[0].toLowerCase().equals("return") && inputCommandList[1].toLowerCase().equals("book")){
+            if(inputCommandList.length == 2 || strToLong(inputCommandList[2]) == 0){
+                System.out.println("Select a valid option!");
+            }
+            else{
+                long bookid = strToLong(inputCommandList[2]);
+                CheckBook.checkReturn(bookSheet,bookid);
+            }
+        }
         else if(inputCommandList[0].toLowerCase().equals("quit")){
             System.out.print("Exsiting Online Library...");
             return true;
@@ -79,6 +88,7 @@ public class LibrarySystem {
         commandList.add("Quit");
         commandList.add("List Books");
         commandList.add("Check Book");
+        commandList.add("Return Book");
     }
 
     private void printCommandList(){
