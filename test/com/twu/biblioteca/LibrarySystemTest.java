@@ -28,7 +28,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_command_list_contain_List_Books() throws Exception {
+    public void should_get_command_list_contain_List_Books_Command() throws Exception {
         LibrarySystem system = new LibrarySystem();
         system.initSystem();
 
@@ -37,7 +37,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_command_list_contain_Check_Book() throws Exception {
+    public void should_get_command_list_contain_Check_Book_Command() throws Exception {
         LibrarySystem system = new LibrarySystem();
         system.initSystem();
 
@@ -46,10 +46,12 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_invalid_message_when_input_not_a_option() throws Exception{
+    public void should_get_invalid_message_when_input_invalid_Command() throws Exception{
 
-        String mockInput = "other\n"
-                         + "Quit\n";
+        String mockInput = "001-0001\n"
+                + "abc123\n"
+                + "other\n"
+                + "Quit\n";
         ByteArrayInputStream mockIn = new ByteArrayInputStream(mockInput.getBytes());
         LibrarySystem system = new LibrarySystem();
 
@@ -65,7 +67,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_command_list_contain_Quit() throws Exception{
+    public void should_get_command_list_contain_Quit_Command() throws Exception{
         LibrarySystem system = new LibrarySystem();
         system.initSystem();
 
@@ -74,11 +76,13 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_print_bookList_when_input_List_Books() throws Exception{
+    public void should_print_bookList_when_input_List_Books_Command() throws Exception{
         LibrarySystem system = new LibrarySystem();
 
-        String mockInput  = "List Books\n"
-                          +"Quit\n";
+        String mockInput  = "001-0001\n"
+                + "abc123\n"
+                + "List Books\n"
+                + "Quit\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
         System.setIn(inputStream);
 
@@ -90,9 +94,11 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_print_successfully_info_when_checkout_success() throws Exception{
+    public void should_print_successfully_info_when_check_book_out_success() throws Exception{
         LibrarySystem system = new LibrarySystem();
-        String mockInput = "Check Book 1\n"
+        String mockInput = "001-0001\n"
+                         + "abc123\n"
+                         + "Check Book 1\n"
                          + "quit\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
         System.setIn(inputStream);
@@ -107,10 +113,12 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_print_unsuccessfully_info_when_checkout_failed() throws Exception{
+    public void should_print_unsuccessfully_info_when_check_book_out_failed() throws Exception{
         LibrarySystem system = new LibrarySystem();
-        String mockInput = "Check Book 4\n"
-                + "quit\n";
+        String mockInput = "001-0001\n"
+                         + "abc123\n"
+                         + "Check Book 4\n"
+                         + "quit\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
         System.setIn(inputStream);
 
@@ -124,7 +132,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_command_list_contain_Return_Book() throws Exception{
+    public void should_get_command_list_contain_Return_Book_Command() throws Exception{
         LibrarySystem system = new LibrarySystem();
         system.initSystem();
 
@@ -133,9 +141,11 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_print_successfully_info_when_check_return_success() throws Exception{
+    public void should_print_successfully_info_when_check_book_return_success() throws Exception{
         LibrarySystem system = new LibrarySystem();
-        String mockInput = "Check Book 3\n"
+        String mockInput = "001-0001\n"
+                         + "abc123\n"
+                         + "Check Book 3\n"
                          + "Return Book 3\n"
                          + "quit\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
@@ -151,9 +161,11 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_print_unsuccessfully_info_when_check_return_failed() throws Exception{
+    public void should_print_unsuccessfully_info_when_check_book_return_failed() throws Exception{
         LibrarySystem system = new LibrarySystem();
-        String mockInput = "Check Book 3\n"
+        String mockInput = "001-0001\n"
+                + "abc123\n"
+                + "Check Book 3\n"
                 + "Return Book 4\n"
                 + "quit\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
@@ -169,7 +181,7 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_get_command_list_contain_List_Movies() throws Exception{
+    public void should_get_command_list_contain_List_Movies_Command() throws Exception{
         LibrarySystem system = new LibrarySystem();
         system.initSystem();
 
@@ -178,11 +190,13 @@ public class LibrarySystemTest {
     }
 
     @Test
-    public void should_print_moviesList_when_input_List_Movies() throws Exception{
+    public void should_print_moviesList_when_input_List_Movies_Command() throws Exception{
         LibrarySystem system = new LibrarySystem();
 
-        String mockInput  = "List Movies\n"
-                          + "Quit\n";
+        String mockInput  = "001-0001\n"
+                + "abc123\n"
+                + "List Movies\n"
+                + "Quit\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
         System.setIn(inputStream);
 
@@ -193,6 +207,71 @@ public class LibrarySystemTest {
         System.setIn(System.in);
     }
 
+    @Test
+    public void should_print_login_promot_message() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+
+        String mockInput = "\n"
+                         + "\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String outputList = outContend.toString();
+        assertTrue(outputList.contains("Library Number: "));
+        assertTrue(outputList.contains("Password: "));
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void should_print_login_error_message_when_input_wrong_library_number() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+
+        String mockInput = "001-0002\n"
+                         + "00000\n"
+                         + "\n"
+                         + "\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertTrue(outputList[outputList.length-2].contains("Library Number or Password Wrong!"));
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void should_get_current_user_profile_when_login_use_001_0001() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+
+        String mockInput = "001-0001\n"
+                         + "abc123\n"
+                         + "List Books\n"
+                         + "Show Profile\n"
+                         + "Quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+
+        String[] outputList = outContend.toString().split("\n");
+
+        assertTrue(outputList[outputList.length-2].contains("Phone Number: 1234567890"));
+        assertTrue(outputList[outputList.length-3].contains("Email: abc@gmail.com"));
+        assertTrue(outputList[outputList.length-4].contains("Name: ZhangSan"));
+        assertTrue(outputList[outputList.length-5].contains("User Id: 1"));
+
+        System.setIn(System.in);
+
+    }
 
     @After
     public void resetStreams(){

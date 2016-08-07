@@ -14,32 +14,74 @@ public class LibrarySystem {
     private BookSheet bookSheet;
     private MovieSheet movieSheet;
 
+    private List<UserLogin> userLoginList;
+    private List<UserProfile> userProfileList;
+
+    private CheckedRecordHistory checkedRecordHistory;
+
     private ArrayList<String> commandList;
 
     private String userCommand;
+    private String currentLibraryNumber;
+
+    Scanner scanner ;
 
     public void initSystem(){
         welcomeGen = new Welcome();
         bookSheet = initBookSheet();
         movieSheet = initMovieSheet();
+        checkedRecordHistory = new CheckedRecordHistory();
+        scanner = new Scanner(System.in);
 
         setupCommandList();
+        setupUserList();
     }
 
     public void run(){
 
-        welcomeGen.printWelcomeMsg();
+        if(LogIn()){
 
-        printCommandList();
+            welcomeGen.printWelcomeMsg();
 
-        Scanner scanner = new Scanner(System.in);
-        userCommand = scanner.nextLine();
-
-        while (!userCommand.isEmpty()){
-
-            if (translateCommand(userCommand)) break;
-
+            printCommandList();
             userCommand = scanner.nextLine();
+
+            while (true){
+                if (translateCommand(userCommand)){
+                    break;
+                }
+
+                userCommand = scanner.nextLine();
+            }
+        }
+
+    }
+
+    private boolean LogIn() {
+
+        String libraryNumber;
+        String password;
+
+        System.out.print("Library Number: ");
+        libraryNumber = scanner.nextLine();
+        System.out.print("Password: ");
+        password = scanner.nextLine();
+
+        while (true){
+            if(libraryNumber.isEmpty() && password.isEmpty()){
+                return false;
+            }
+            if(CheckLogin.Login(userLoginList,libraryNumber,password)){
+                currentLibraryNumber = libraryNumber;
+                return true;
+            }
+
+            System.out.println("Library Number or Password Wrong!");
+
+            System.out.print("Library Number: ");
+            libraryNumber = scanner.nextLine();
+            System.out.print("Password: ");
+            password = scanner.nextLine();
         }
     }
 
@@ -70,6 +112,9 @@ public class LibrarySystem {
                 CheckBook.checkReturn(bookSheet,bookid);
             }
         }
+        else if(inputCommandList[0].toLowerCase().equals("show") && inputCommandList[1].toLowerCase().equals("profile")){
+            printUserProfile();
+        }
         else if(inputCommandList[0].toLowerCase().equals("quit")){
             System.out.print("Exsiting Online Library...");
             return true;
@@ -78,6 +123,14 @@ public class LibrarySystem {
             System.out.println("Select a valid option!");
         }
         return false;
+    }
+
+    private void printUserProfile() {
+        UserProfile currentUserProfile = getCurrentUserProfile();
+        System.out.println("User Id: " + currentUserProfile.getId());
+        System.out.println("Name: " + currentUserProfile.getName());
+        System.out.println("Email: " + currentUserProfile.getEmail());
+        System.out.println("Phone Number: " + currentUserProfile.getPhoneNumber());
     }
 
     private long strToLong(String strArgu){
@@ -93,6 +146,17 @@ public class LibrarySystem {
         return commandList;
     }
 
+    private void setupUserList() {
+        userLoginList   = new ArrayList<UserLogin>();
+        userProfileList = new ArrayList<UserProfile>();
+
+        userLoginList.add(new UserLogin(1,"001-0001","abc123"));
+        userProfileList.add(new UserProfile(1,"ZhangSan","abc@gmail.com","1234567890"));
+
+        userLoginList.add(new UserLogin(1,"001-0002","abc134"));
+        userProfileList.add(new UserProfile(1,"John","ahhh@gmail.com","1234560973"));
+    }
+
     private void setupCommandList(){
         commandList = new ArrayList<String>();
         commandList.add("Quit");
@@ -100,6 +164,7 @@ public class LibrarySystem {
         commandList.add("Check Book");
         commandList.add("Return Book");
         commandList.add("List Movies");
+        commandList.add("Shou Profile");
     }
 
     private void printCommandList(){
@@ -151,5 +216,30 @@ public class LibrarySystem {
         initMovieList.add(new Movie(3, new Date(20160902),"Wang Wu",((short) 3)));
 
         return new MovieSheet(initMovieList);
+    }
+
+    public UserProfile getCurrentUserProfile() {
+        long currentUserId = 0;
+        for(int i = 0;i<userLoginList.size();++i){
+            if(userLoginList.get(i).getLibraryNumber().equals(currentLibraryNumber)){
+                currentUserId = userLoginList.get(i).getUserId();
+                break;
+            }
+        }
+        for(int i =0;i<userProfileList.size();++i){
+            if(userProfileList.get(i).getId() == currentUserId){
+                return userProfileList.get(i);
+            }
+        }
+        return null;
+    }
+
+    public UserLogin getCurrentUserLogin() {
+        for(int i = 0;i<userLoginList.size();++i){
+            if(userLoginList.get(i).getLibraryNumber().equals(currentLibraryNumber)){
+                return userLoginList.get(i);
+            }
+        }
+        return null;
     }
 }
