@@ -20,7 +20,36 @@ public class MovieSheet implements IMovieSheet {
         }
     }
 
+    public boolean CheckOutOneMoive(long moiveId){
+        for(int i=0;i<MovieList.size();++i){
+            if(((Movie)MovieList.get(i)).getId() == moiveId){
+                ((Movie)MovieList.get(i)).setCheckedOut(true);
+                return true;
+            }
+        }
+        return  false;
+
+    }
+
+    public boolean CheckReturnOneMoive(long moiveId){
+        for(int i=0;i<MovieList.size();++i){
+            if(((Movie)MovieList.get(i)).getId() == moiveId){
+                ((Movie)MovieList.get(i)).setCheckedOut(false);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<IMovie> getMovieList(){
-        return MovieList;
+
+        List<IMovie> movieList = new ArrayList<IMovie>();
+        for(int i=0;i<MovieList.size();++i){
+            if(!((Movie)MovieList.get(i)).getIsCheckedOut()){
+                movieList.add(MovieList.get(i));
+            }
+        }
+
+        return movieList;
     }
 }

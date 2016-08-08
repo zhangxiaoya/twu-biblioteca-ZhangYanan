@@ -112,6 +112,24 @@ public class LibrarySystem {
                 CheckBook.checkReturn(bookSheet,bookid);
             }
         }
+        else if(inputCommandList[0].toLowerCase().equals("check") && inputCommandList[1].toLowerCase().equals("moive")){
+            if(inputCommandList.length == 2 || strToLong(inputCommandList[2])==0){
+                System.out.println("Select a valid option!");
+            }
+            else{
+                long moiveid = strToLong(inputCommandList[2]);
+                CheckMoive.checkOut(movieSheet,moiveid);
+            }
+        }
+        else if(inputCommandList[0].toLowerCase().equals("return") && inputCommandList[1].toLowerCase().equals("moive")){
+        if(inputCommandList.length == 2 || strToLong(inputCommandList[2]) == 0){
+            System.out.println("Select a valid option!");
+        }
+        else{
+            long moiveid = strToLong(inputCommandList[2]);
+            CheckMoive.checkReturn(movieSheet,moiveid);
+        }
+    }
         else if(inputCommandList[0].toLowerCase().equals("show") && inputCommandList[1].toLowerCase().equals("profile")){
             printUserProfile();
         }
@@ -164,7 +182,9 @@ public class LibrarySystem {
         commandList.add("Check Book");
         commandList.add("Return Book");
         commandList.add("List Movies");
-        commandList.add("Shou Profile");
+        commandList.add("Show Profile");
+        commandList.add("Check Moive");
+        commandList.add("Return Moive");
     }
 
     private void printCommandList(){

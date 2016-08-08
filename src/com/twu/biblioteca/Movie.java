@@ -10,12 +10,14 @@ public class Movie implements IMovie {
     private Date PublishYear;
     private String Director;
     private short Rate;
+    private boolean IsCheckedOut;
 
     public Movie(long id, Date year, String director, short rate){
         Id = id;
         PublishYear = year;
         Director = director;
         Rate = rate;
+        IsCheckedOut = false;
     }
 
     public long getId(){
@@ -44,5 +46,12 @@ public class Movie implements IMovie {
     }
     public void setRate(short rate){
         Rate = rate;
+    }
+
+    public boolean getIsCheckedOut(){
+        return IsCheckedOut;
+    }
+    public void setCheckedOut(boolean checkedOut){
+        IsCheckedOut = checkedOut;
     }
 }

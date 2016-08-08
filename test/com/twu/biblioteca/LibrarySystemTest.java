@@ -247,6 +247,15 @@ public class LibrarySystemTest {
     }
 
     @Test
+    public void should_get_command_list_contain_Show_Profile_Command() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        system.initSystem();
+        ArrayList<String> commandList = system.getCommandList();
+
+        assertTrue(commandList.contains("Show Profile"));
+    }
+
+    @Test
     public void should_get_current_user_profile_when_login_use_001_0001() throws Exception{
         LibrarySystem system = new LibrarySystem();
 
@@ -271,6 +280,104 @@ public class LibrarySystemTest {
 
         System.setIn(System.in);
 
+    }
+
+    @Test
+    public void should_get_command_list_contain_Check_Moive_Command() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        system.initSystem();
+        ArrayList<String> commandList = system.getCommandList();
+
+        assertTrue(commandList.contains("Check Moive"));
+    }
+
+    @Test
+    public void should_get_command_list_contain_Return_Moive_Command() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        system.initSystem();
+        ArrayList<String> commandList = system.getCommandList();
+
+        assertTrue(commandList.contains("Return Moive"));
+    }
+
+
+    @Test
+    public void should_print_successfully_info_when_check_moive_out_success() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        String mockInput = "001-0001\n"
+                + "abc123\n"
+                + "Check Moive 1\n"
+                + "quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertEquals("Thank you! Enjoy the moive.",outputList[outputList.length - 2]);
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void should_print_unsuccessfully_info_when_check_moive_out_failed() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        String mockInput = "001-0001\n"
+                + "abc123\n"
+                + "Check Moive 4\n"
+                + "quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertEquals("That moive is not available.",outputList[outputList.length - 2]);
+
+        System.setIn(System.in);
+    }
+
+
+    @Test
+    public void should_print_successfully_info_when_check_moive_return_success() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        String mockInput = "001-0001\n"
+                + "abc123\n"
+                + "Check Moive 3\n"
+                + "Return Moive 3\n"
+                + "quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertEquals("Thank you for returning the moive.",outputList[outputList.length - 2]);
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void should_print_unsuccessfully_info_when_check_moive_return_failed() throws Exception{
+        LibrarySystem system = new LibrarySystem();
+        String mockInput = "001-0001\n"
+                + "abc123\n"
+                + "Check Moive 3\n"
+                + "Return Moive 4\n"
+                + "quit\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(mockInput.getBytes());
+        System.setIn(inputStream);
+
+        system.initSystem();
+        system.run();
+
+        String[] outputList = outContend.toString().split("\n");
+        assertEquals("That is not a valid moive to return.",outputList[outputList.length - 2]);
+
+        System.setIn(System.in);
     }
 
     @After
